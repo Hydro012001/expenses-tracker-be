@@ -7,6 +7,7 @@ import {
   getBudgetByDate,
   getBudgetById,
   getBudgetByUserId,
+  setBudgetActiveRepo,
 } from "../repository/Budget";
 import { getExpensesSumByBudgetId } from "../repository/Expenses";
 import { BudgetExpensesInterface } from "../interface/Budget";
@@ -86,7 +87,7 @@ export const getBudgetRemaining = async (req: Request, res: Response) => {
     //   day: "numeric",
     // };
 
-    console.log("budgetId", budgetId);
+    // console.log("budgetId", budgetId);
 
     // const formattedDate: string = date.toLocaleDateString("en-US", options);
 
@@ -164,4 +165,17 @@ export const getBudgetExpenses = async (req: Request, res: Response) => {
   } catch (error: any) {
     return res.status(500).send({ message: error?.message || "Server error" });
   }
+};
+
+export const setBudgetActive = async (req: Request, res: Response) => {
+  const { budgetId } = req.body;
+  const userId = req.session.userId;
+
+  const budget = await getBudgetById(budgetId);
+  if (!budget) {
+    return res.status(404).send({ message: "Budget not found." });
+  }
+  await setBudgetActiveRepo(budgetId);
+
+  return res.status(200).send({ message: "Budget is successfully active" });
 };

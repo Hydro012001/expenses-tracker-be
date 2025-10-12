@@ -7,6 +7,9 @@ export const getUserByIdService = async (req: Request, res: Response) => {
 
   const user = (await getUserByID(String(userId))) as UserAttributes;
 
+  if (!user) {
+    return res.status(404).json({ message: "User not found" });
+  }
   const formattedUser = {
     ...user,
     createdAt: user.createdAt

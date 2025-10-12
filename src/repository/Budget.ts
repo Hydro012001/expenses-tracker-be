@@ -98,3 +98,6 @@ export const budgetExpenses = async (
 
   return budget_expenses as unknown as BudgetExpensesInterface;
 };
+export const setBudgetActiveRepo = async (budgetId: string) => {
+  await Budget.update({ status_flag: 1 }, { where: { id: budgetId } });
+};
