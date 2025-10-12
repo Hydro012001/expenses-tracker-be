@@ -50,7 +50,7 @@ app.use(
   })
 );
 
-app.use("/api", routes);
+app.use(routes);
 db.sequelize.sync({ force: false }).then(async (result: Sequelize) => {
   db.Associations();
   await insertDefaultUser();
