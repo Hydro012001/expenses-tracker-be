@@ -36,8 +36,31 @@ app.use(
   })
 );
 
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://192.168.1.101:5173",
+  "https://expenses-a-tracker.netlify.app",
+  "https://expenz-web.netlify.app",
+];
+
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  })
+);
+
+// Allow preflight
+app.options("*", cors());
 
 app.use("/api", routes);
 db.sequelize.sync({ force: false }).then(async (result: Sequelize) => {
