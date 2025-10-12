@@ -80,7 +80,7 @@ export const signUpUser = async (req: Request, res: Response) => {
     email: user.email,
   };
   await SaveToken(payload);
-  const link = `${feurl}/verify?token=${token}`;
+  const link = `${feurl}/#/verify?token=${token}`;
   await sendVerificationEmail(user.email, link);
   await SaveUser(user);
   return res.status(200).json({ message: "Signup succesffully" });
