@@ -43,6 +43,7 @@ app.use(
       "http://localhost:5173",
       "http://192.168.1.101:5173",
       "https://expenses-a-tracker.netlify.app",
+      "https://expenz-web.netlify.app",
     ],
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
